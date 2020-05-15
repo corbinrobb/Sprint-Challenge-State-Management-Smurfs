@@ -23,10 +23,26 @@ In this challenge, you are to build a Smurfs village utilizing context or Redux 
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 - [ ] What problem does the context API help solve?
+
+  It solves the problem of prop drilling.
+
 - [ ] In your own words, describe `actions`, `reducers` and the `store` and their role in Redux. What does each piece do? Why is the store known as a 'single source of truth' in a redux application?
+
+  The store acts kinda as a global state for the application, actions are like a request to the store to update it or get a piece of it, and reducers are where the state updates can be processed and made.
+  They all work together to create a one way circular flow of state through the application. The store is known as the single source of truth because it can hold state for all the components in the applicaiton.
+
 - [ ] What is the difference between Application state and Component state? When would be a good time to use one over the other?
+
+  Application state is state that should be available throughout the app for whatever reasons and Component state is state that should only be available within that component.
+  I think that a good time to have application state is when mutiple components need access to some data and a good use for component state would be things like input values for a form or similar states that dont need to be accessed by the whole app.
+
 - [ ] Describe `redux-thunk`, what does it allow us to do? How does it change our `action-creators`?
+
+  Redux-thunk is a dependency that allows us to return a function from an action instead of just an action object. This allows us to have run asynchronous code in our actions and it is super useful for dealing with data from an api.
+
 - [ ] What is your favorite state management system you've learned and this sprint? Please explain why!
+
+  I really like redux because it gives my applications a lot of organization and structure.
 
 ## Project Set Up
 
