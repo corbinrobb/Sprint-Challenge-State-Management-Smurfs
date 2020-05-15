@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
-import axios from 'axios';
-import { SmurfContext } from '../contexts/SmurfContext';
+import React, { useState, useEffect } from 'react';
+import { postSmurf, editSmurf } from '../actions';
+import { useSelector, useDispatch } from 'react-redux';
 
 const initial = {
   name: '',
@@ -9,23 +9,32 @@ const initial = {
 };
 
 const SmurfForm = () => {
-  const [newSmurf, setNewSmurf] = useState(initial);
-  const { setSmurfs } = useContext(SmurfContext);
+  const editing = useSelector(state => state.editing);
+  const smurfs = useSelector(state => state.smurfs);
+  const [smurf, setSmurf] = useState(initial);
+  const dispatch = useDispatch();
+
+  
+
+  useEffect(() => {
+    if (editing) setSmurf(editing);
+  }, [smurfs, editing]);
 
   const handleChange = e => {
-    setNewSmurf({
-      ...newSmurf,
+    setSmurf({
+      ...smurf,
       [e.target.name]: e.target.value,
     })
   }
 
   const handleSubmit = e => {
     e.preventDefault();
-    axios
-      .post('http://localhost:3333/smurfs', {...newSmurf, age: Number(newSmurf.age)})
-      .then(res => setSmurfs(res.data))
-      .catch(err => console.log(err))
-    setNewSmurf(initial);
+    if (editing) {
+      dispatch(editSmurf(smurf))
+    } else {
+      dispatch(postSmurf(smurf))
+    }
+    setSmurf(initial);
   }
 
   return (
@@ -33,20 +42,20 @@ const SmurfForm = () => {
       Add a Smurf!
       <input
         name="name"
-        value={newSmurf.name}
+        value={smurf.name}
         onChange={handleChange}
       />
       <input
         name="age"
-        value={newSmurf.age}
+        value={smurf.age}
         onChange={handleChange}
       />
       <input
         name="height"
-        value={newSmurf.height}
+        value={smurf.height}
         onChange={handleChange}
       />
-      <button>Submit</button>
+      <button>{(editing) ? 'Edit' : 'Submit'}</button>
     </form>
   );
 }

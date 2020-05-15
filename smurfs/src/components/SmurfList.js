@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Smurf from './Smurf';
-import { SmurfContext } from '../contexts/SmurfContext';
+import { useSelector } from 'react-redux';
 
 const SmurfList = () => {
-  const { smurfs } = useContext(SmurfContext);
+  const smurfs = useSelector(state => state.smurfs);
 
   return (
     <>

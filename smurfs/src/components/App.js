@@ -1,28 +1,23 @@
-import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import React, { useEffect } from "react";
 import "./App.css";
 import SmurfList from './SmurfList';
 import SmurfForm from "./SmurfForm";
 
-import { SmurfContext } from '../contexts/SmurfContext';
+import { useDispatch } from 'react-redux';
+import { fetchSmurfs } from '../actions';
 
 
 const App = () => {
-  const [ smurfs, setSmurfs ] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3333/smurfs')
-      .then(res => setSmurfs(res.data))
-      .catch(err => console.log(err))
-  }, [])
+    dispatch(fetchSmurfs());
+  }, [dispatch])
 
   return (
     <div className="App">
-      <SmurfContext.Provider value={{ smurfs, setSmurfs }}>
-        <SmurfForm />
-        <SmurfList />
-      </SmurfContext.Provider>
+      <SmurfForm />
+      <SmurfList />
     </div>
   );
 }
