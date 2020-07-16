@@ -1,16 +1,25 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <h1>SMURFS! 2.0 W/ Redux</h1>
-        <div>Welcome to your state management version of Smurfs!</div>
-        <div>Start inside of your `src/index.js` file!</div>
-        <div>Have fun!</div>
-      </div>
-    );
-  }
+import SmurfList from './SmurfList';
+import SmurfForm from "./SmurfForm";
+
+import { useDispatch } from 'react-redux';
+import { fetchSmurfs } from '../actions';
+
+
+const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchSmurfs());
+  }, [dispatch])
+
+  return (
+    <div className="App">
+      <SmurfForm />
+      <SmurfList />
+    </div>
+  );
 }
 
 export default App;
